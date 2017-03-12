@@ -1,5 +1,5 @@
 
-#pragma comment(lib,"icnewfeat.lib")
+//#pragma comment(lib,"icnewfeat32.lib")
 //extern "C" void __cdecl __intel_new_feature_proc_init( void ) {}
 //extern "C" int __cdecl strcat_s( char * _Dst, size_t _SizeInBytes, const char * _Src ) { return 0; }
 
@@ -25,6 +25,8 @@
 #include "config.inc"
 
 #include "help.inc"
+
+#define GCL_HICON           (-14)
 
 enum{ N_VIEWS=8 };
 
@@ -163,7 +165,8 @@ int __stdcall WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmd
 //  GetWindowPlacement( win, &winpl );
 
   HICON ico = LoadIcon( HINSTANCE(0x400000), MAKEINTRESOURCE(500) );
-  SetClassLong( win, GCL_HICON, LONG(ico) );
+//  SetClassLong( win, GCL_HICON, LONG(ico) );
+  SetClassLong( win, GCL_HICON, ((byte*)ico)-((byte*)0) );
   DeleteObject(ico);
 
   LOGBRUSH lb; 

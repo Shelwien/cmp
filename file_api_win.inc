@@ -8,19 +8,19 @@ struct filehandle0 {
   HANDLE f;
 
   operator int( void ) {
-    return int(f);
+    return ((byte*)f)-((byte*)0);
   }
 
   template< typename CHAR >
   uint open( const CHAR* name ) {
     f = file_open( name );
-    return uint(f);
+    return ((byte*)f)-((byte*)0);
   }
 
   template< typename CHAR >
   uint make( const CHAR* name ) {
     f = file_make( name );
-    return uint(f);
+    return ((byte*)f)-((byte*)0);
   }
 
   int close( void ) {

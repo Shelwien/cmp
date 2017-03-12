@@ -158,7 +158,7 @@ qword getfilesize( HANDLE f ) {
   const uint bufsize=1<<16,bufalign=1<<12;
   byte* _buf = new byte[bufsize+bufalign];
   if( _buf ) {
-    byte* buf = _buf + bufalign-(uint(_buf)%bufalign);
+    byte* buf = _buf + bufalign-((_buf-((byte*)0))%bufalign);
     uint bit,len;
     pos = 0;
     for( bit=62; bit!=-1; bit-- ) {
