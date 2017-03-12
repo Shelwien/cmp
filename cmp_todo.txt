@@ -1,0 +1,44 @@
+
+[07-01-2016 10:06]
+
+1. F5 (F8?) - directly type the address
+
+2. Shift-space/shift-F6 - scan for diffs backwards
+
+3. Ctrl-Home - reset view width
+
+4. Vertical split
+ - 'S': switch vertical/horizontal split
+
+5. text/hex-full/hex-text/text-eol switch
+ - Enter: switch hex+text/hex/text view modes
+ - text view with LFs: simply wrap at EOL
+
+5a. pixel view: 1/2/3/4 bytes per pixel
+ - 1-9 etc: graphic modes with plain colors replacing symbols
+ - leave an empty border around pixel box with normally bk color - to show diffs
+
+5b. more datatypes: float/double/extended, packed timestamps: unixtime,FILETIME
+ - number views: db/dw/dd/dq/float/double/extended (this one for hexview w/o text part)
+
+6. width autodetect
+
+7. best addr shift autodetect (for best match)
+
+8. add filename headers (and filesize, dump width)
+ - limit filename length (add ... or smth)
+
+9. show that diffscan thread is working
+
+A. if diffscan is started after end of some files, ignore these
+
+
+
+
+Булат Зиганшин:
+ограничение выхода за начало/конец и полоса прокрутки. что сразу в глаза бросилось
+ещё не хватает: информация о файлах - длина как минимум
+очень полезно - метки причём в двух вариантах, стек и поименованные
+
+
+
