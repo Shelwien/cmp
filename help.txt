@@ -1,0 +1,10 @@
+;
+[[helptext]]
+~Up~,~Down~,~Left~,~Right~,~PgUp~,~PgDn~,~Home~,~End~ = Navigation
+~'X'~ = Toggle 32-bit/64-bit address; ~'R'~ = Reload file data
+~Tab~ = Select a file; Navigation keys only apply to selected file
+~Ctrl~-~left~/~right~ = Change row width; ~Ctrl~-~up~/~down~ = Change row number
+~Space~,~F6~ = Skip to next difference; any key = stop
+~'+'~/~'-'~ = Change font size; ~Ctrl~-~'+'~/~'-'~ = Change font height
+~Alt~-~'+'~/~'-'~ = Change font width; ~'C'~ = Change font
+~Escape~ = Quit; ~'S'~= Save GUI config; ~'L'~ = Load config
