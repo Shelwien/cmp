@@ -166,7 +166,8 @@ printf( "wfr_x=%i\n", wfr_x );
 //  GetWindowPlacement( win, &winpl );
 
   HICON ico = LoadIcon( HINSTANCE(0x400000), MAKEINTRESOURCE(500) );
-  SetClassLong( win, GCL_HICON, LONG(ico) );
+  //SetClassLong( win, GCL_HICON, LONG(ico) );
+  SetClassLong( win, GCL_HICON, ((byte*)ico)-((byte*)0) );
   DeleteObject(ico);
 
   LOGBRUSH lb; 
