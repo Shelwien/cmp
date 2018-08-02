@@ -1,5 +1,5 @@
 
-//#pragma comment(lib,"icnewfeat32.lib")
+//#pragma comment(lib,"icnewfeat.lib")
 //extern "C" void __cdecl __intel_new_feature_proc_init( void ) {}
 //extern "C" int __cdecl strcat_s( char * _Dst, size_t _SizeInBytes, const char * _Src ) { return 0; }
 
@@ -25,8 +25,6 @@
 #include "config.inc"
 
 #include "help.inc"
-
-#define GCL_HICON           (-14)
 
 enum{ N_VIEWS=8 };
 
@@ -135,12 +133,15 @@ int __stdcall WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmd
   LoadConfig();
   tb_help.textsize( helptext, 0, &help_SY );
 
-  const int wfr_x = GetSystemMetrics(SM_CXFIXEDFRAME);
+  const int wfr_x = GetSystemMetrics(SM_CXFIXEDFRAME) + GetSystemMetrics(SM_CXBORDER);
   const int wfr_y = GetSystemMetrics(SM_CYFIXEDFRAME);
   const int wfr_c = GetSystemMetrics(SM_CYCAPTION);
   RECT scr; SystemParametersInfo( SPI_GETWORKAREA,0,&scr,0 );
   const int scr_w = scr.right-scr.left;
   const int scr_h = scr.bottom-scr.top;
+
+printf( "wfr_x=%i\n", wfr_x );
+
 //printf( "w=%i h=%i %i %i %i %i\n", scr_w,scr_h, scr.left,scr.top, scr.right,scr.bottom );
 //  ch1.SelectFont();
 
@@ -165,8 +166,7 @@ int __stdcall WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmd
 //  GetWindowPlacement( win, &winpl );
 
   HICON ico = LoadIcon( HINSTANCE(0x400000), MAKEINTRESOURCE(500) );
-//  SetClassLong( win, GCL_HICON, LONG(ico) );
-  SetClassLong( win, GCL_HICON, ((byte*)ico)-((byte*)0) );
+  SetClassLong( win, GCL_HICON, LONG(ico) );
   DeleteObject(ico);
 
   LOGBRUSH lb; 
@@ -212,11 +212,8 @@ int __stdcall WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmd
 
     WX = 2*wfr_x;
     for(i=0;i<F_num;i++) WX += F[i].Calc_WCX( mBX, lf.f_addr64, (i!=F_num-1) ) * ch1.wmax;
-    WY = mBY*ch1.hmax;
-    if( lf.f_help ) {
-      WY += help_SY*ch1.hmax; 
-    }
-    WY+= 2*wfr_y+wfr_c;
+
+    WY = mBY*ch1.hmax + lf.f_help* help_SY*ch1.hmax + 2*wfr_y+wfr_c;
 
     if( WX>bm1.bmX ) mBX&=~(1<<j);
     if( WY>bm1.bmY ) mBY&=~(1<<j);
@@ -230,7 +227,7 @@ int __stdcall WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmd
 
 printf( "mBX=%i mBY=%i BX=%i BY=%i\n", mBX, mBY, lf.BX, lf.BY );
 
-  WX=2*wfr_x;
+  WX=0*wfr_x;
   for(i=0;i<F_num;i++ ) {
     uint WCX = F[i].Calc_WCX( mBX, lf.f_addr64, (i!=F_num-1) );
     tb[i].Init( ch1, WCX,lf.BY, WX,0 );
@@ -238,6 +235,8 @@ printf( "mBX=%i mBY=%i BX=%i BY=%i\n", mBX, mBY, lf.BX, lf.BY );
     F[i].SetTextbuf( tb[i], lf.BX, ((i!=F_num-1)?hexfile::f_vertline:0) | lf.f_addr64);
     F[i].SetFilepos( F[i].F1pos );
   }
+  WX+=2*wfr_x;
+
   WY = tb[0].WCY*ch1.hmax;
   if( lf.f_help ) {
     tb_help.Init( ch1, WX/ch1.wmax,help_SY, 0,WY );
@@ -317,7 +316,8 @@ printf( "WX=%i WY=%i bmX=%i bmY=%i\n", WX,WY,bm1.bmX,bm1.bmY );
         if( (lf.cur_view>=0) && (lf.cur_view<F_num) ) {
           i = lf.cur_view;
           hPenOld = SelectObject( dibDC, hPen );
-          DrawBox( dibDC, tb[i].WPX-2,tb[i].WPY, tb[i].WPX-2+tb[i].WSX-5,tb[i].WPY+tb[i].WSY-5, pen_shift );
+printf( "!i=%i WSX=%i WCX=%i!\n", i, tb[i].WSX, tb[i].WCX );
+          DrawBox( dibDC, tb[i].WPX-2+5*(i==0),tb[i].WPY, tb[i].WPX-2+tb[i].WSX-5*(i!=F_num-1),tb[i].WPY+tb[i].WSY-5, pen_shift );
           SelectObject( dibDC, hPenOld );
           pen_shift++;
         }

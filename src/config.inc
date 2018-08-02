@@ -42,6 +42,6 @@ void LoadConfig( ) {
     RegCloseKey( hk );
   } else {
     SetLastError(r);
-    printf( "r=%X\nError=<%s>\n", r, GetErrorText() );
+    printf( "r=%X\nConfig Error=<%s>\n", r, GetErrorText() );
   }
 }

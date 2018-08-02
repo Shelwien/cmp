@@ -127,7 +127,7 @@ struct hexfile {
       F1size = F1.size();
 //printf( "F1size=%I64X\n", F1size );
     }
-    return ((byte*)F1.f)-((byte*)0);
+    return uint(F1.f);
   }
 
   word* HexPrint( word* s, qword x, uint w, uint attr ) {
